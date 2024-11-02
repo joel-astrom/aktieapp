@@ -1,7 +1,9 @@
-streamlit
-pandas
-ta
-yfinance
-plotly
+streamlit==1.38.0
+pandas==2.2.3
+pandas-datareader==0.10.0
+pandas_ta==0.3.14b0
+ta==0.11.0
+yfinance==0.2.37
+plotly==5.20.0
 datetime
-pytz
+pytz==2024.1
