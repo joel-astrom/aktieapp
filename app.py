@@ -11,17 +11,6 @@ st.set_page_config(page_title="Aktieinfo",
                    page_icon=":chart_with_upwards_trend:",
                    layout="wide")
 
-st.markdown(
-    """
-    <style>
-    .css-1lcbmhc.e1fqkh3o3 {display: none;}  /* Döljer logotypen */
-    footer {visibility: hidden;}               /* Döljer footer */
-    .css-14xtw13.e1fqkh3o4 {display: none;}  /* Döljer "Hosted with Streamlit" */
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # Logging för felsökning
 import logging
 logging.basicConfig(level=logging.INFO)
