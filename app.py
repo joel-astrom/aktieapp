@@ -1,17 +1,20 @@
 import streamlit as st
 import pandas as pd
-import ta.trend
+import ta
 import yfinance as yf
 import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
-import pytz
-import ta
 
 # En express-byggd Dashboard för lite aktiedata.
 st.set_page_config(page_title="Aktieinfo",
                    page_icon=":chart_with_upwards_trend:",
                    layout="wide")
+
+# Logging för felsökning
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Lite funktioner först
 def fetch_stock_data(ticker, period, interval):
@@ -42,6 +45,18 @@ def calculate_metrics(data):
     return last_close, change, pct_change, high, low, volume
 
 def add_technical_indicators(data):
+    # Kontrollera att 'Close' kolumnen finns och är numerisk
+    if 'Close' not in data.columns:
+        raise ValueError("'Close' column is missing from data")
+    if not pd.api.types.is_numeric_dtype(data['Close']):
+        raise ValueError("'Close' column must be numeric")
+    # Hantera NaN-värden
+    if data['Close'].isnull().any():
+        data['Close'] = data['Close'].fillna(method='ffill')
+
+    # Logga de första raderna i 'Close' kolumnen
+    logger.info(data['Close'].head())
+
     data['SMA_20'] = ta.trend.sma_indicator(data['Close'], window=20)
     data['EMA_20'] = ta.trend.ema_indicator(data['Close'], window=20)
     return data
@@ -116,7 +131,6 @@ if st.sidebar.button('Uppdatera'):
                     st.dataframe(data[['Datetime', 'SMA_20', 'EMA_20']])
 
         "---"
-
 
 # Sidebar-priser
 # Liten skön sektion med aktiepriser för utvalda aktier...!
