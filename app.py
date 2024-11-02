@@ -45,20 +45,24 @@ def calculate_metrics(data):
     return last_close, change, pct_change, high, low, volume
 
 def add_technical_indicators(data):
-    # Kontrollera att 'Close' kolumnen finns och är numerisk
+    # Check if the 'Close' column exists
     if 'Close' not in data.columns:
         raise ValueError("'Close' column is missing from data")
-    if not pd.api.types.is_numeric_dtype(data['Close']):
-        raise ValueError("'Close' column must be numeric")
-    # Hantera NaN-värden
-    if data['Close'].isnull().any():
-        data['Close'] = data['Close'].fillna(method='ffill')
+    
+    # Convert 'Close' column to numeric, coercing errors to NaN
+    data['Close'] = pd.to_numeric(data['Close'], errors='coerce')
 
-    # Logga de första raderna i 'Close' kolumnen
-    logger.info(data['Close'].head())
+    # Check if the 'Close' column is all NaN after conversion
+    if data['Close'].isnull().all():
+        raise ValueError("'Close' column cannot be all NaN after conversion")
 
+    # Fill NaN values with the previous valid value
+    data['Close'] = data['Close'].ffill()
+
+    # Calculate technical indicators
     data['SMA_20'] = ta.trend.sma_indicator(data['Close'], window=20)
     data['EMA_20'] = ta.trend.ema_indicator(data['Close'], window=20)
+
     return data
 
 # Nu kör vi lite dashboard layout
