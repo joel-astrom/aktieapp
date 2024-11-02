@@ -49,6 +49,10 @@ def add_technical_indicators(data):
     if 'Close' not in data.columns:
         raise ValueError("'Close' column is missing from data")
     
+    # Check if 'Close' is a Series
+    if not isinstance(data['Close'], pd.Series):
+        raise TypeError("'Close' must be a pandas Series")
+    
     # Convert 'Close' column to numeric, coercing errors to NaN
     data['Close'] = pd.to_numeric(data['Close'], errors='coerce')
 
