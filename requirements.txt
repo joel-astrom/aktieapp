@@ -2,7 +2,6 @@ streamlit
 pandas
 ta
 yfinance
-plotly.express
-plotly.graph_objects
+plotly
 datetime
 pytz
