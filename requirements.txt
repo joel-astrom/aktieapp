@@ -1,0 +1,8 @@
+streamlit
+pandas
+ta
+yfinance
+plotly.express
+plotly.graph_objects
+datetime
+pytz
