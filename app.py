@@ -134,16 +134,16 @@ if st.sidebar.button('Uppdatera'):
 
 # Sidebar-priser
 # Liten skön sektion med aktiepriser för utvalda aktier...!
-st.sidebar.header("Aktiepriser")
-aktier = ['AAPL', 'TSLA', 'NVDA', 'META']
-for aktie in aktier:
-    aktie_data = fetch_stock_data(aktie, '1d', '1m')
-    if not aktie_data.empty:
-        aktie_data = process_data(aktie_data)
-        last_price = aktie_data['Close'].iloc[-1]
-        change = last_price - aktie_data['Open'].iloc[0]
-        pct_change = (change / aktie_data['Open'].iloc[0]) * 100
-        st.sidebar.metric(f"{aktie}", f"{last_price:.2f}", f"{change:.2f} ({pct_change:.2f}%)")
+# st.sidebar.header("Aktiepriser")
+# aktier = ['AAPL', 'TSLA', 'NVDA', 'META']
+# for aktie in aktier:
+#     aktie_data = fetch_stock_data(aktie, '1d', '1m')
+#     if not aktie_data.empty:
+#         aktie_data = process_data(aktie_data)
+#         last_price = aktie_data['Close'].iloc[-1]
+#         change = last_price - aktie_data['Open'].iloc[0]
+#         pct_change = (change / aktie_data['Open'].iloc[0]) * 100
+#         st.sidebar.metric(f"{aktie}", f"{last_price:.2f}", f"{change:.2f} ({pct_change:.2f}%)")
 
 st.sidebar.subheader('Om')
 st.sidebar.info('Denna dashboard visar aktiedata och tekniska indikatorer för olika tidsperioder')
